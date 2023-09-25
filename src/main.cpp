@@ -4,4 +4,12 @@ void initialize() {}
 
 void autonomous() {}
 
-void opcontrol() {}
+void opcontrol() {
+
+    while (true) {
+
+        
+
+        pros::delay(20);
+    }
+}
