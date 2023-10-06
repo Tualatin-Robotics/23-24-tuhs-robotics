@@ -15,7 +15,7 @@ void drivetrain(int team, pros::Controller drive_con) {
     int ry = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
     int lv = lx * ry;
-        int rv = abs(lx) * ry;
+    int rv = abs(lx) * ry;
     switch (team) {
     case 2:
         left = lv;
