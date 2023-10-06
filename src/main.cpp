@@ -12,7 +12,24 @@ std::ifstream B2_Team("/usd/B2_Team.txt");
 int bot = 0;
 
 void initialize() {
-    
+    if (bot == 0) {
+        if (A_Team) {
+            bot = 1;
+            std::cout << "A Bot" << std::endl;
+        }
+        if (B1_Team) {
+            bot = 2;
+            std::cout << "B Bot" << std::endl;
+        }
+        if (B2_Team) {
+            bot = 3;
+            std::cout << "C Bot" << std::endl;
+        }
+        if (!A_Team && !B1_Team && !B2_Team) {
+            bot = 4;
+            std::cout << "No SD card insterted" << std::endl;
+        }
+    }
 }
 
 void autonomous() {
