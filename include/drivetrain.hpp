@@ -9,19 +9,21 @@ void init_drivetrain() {
 
 void drivetrain(int team, pros::Controller drive_con) {
 
-    int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int right_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+    int leftstick_x = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+    int leftstick_y = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int rightstick_x = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int rightstick_y = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
     switch (team) {
         case 2:
-            front_left = left_stick;
-            front_right = right_stick;
+            front_left = leftstick_y;
+            front_right = rightstick_y;
             break;
         default:
-            front_left = left_stick;
-            back_left = left_stick;
-            front_right = right_stick;
-            back_right = right_stick;
+            front_left = leftstick_y;
+            back_left = leftstick_y;
+            front_right = rightstick_y;
+            back_right = rightstick_y;
             break;
     }
 }
