@@ -12,6 +12,10 @@ std::ifstream B2_Team("/usd/B2_Team.txt");
 int bot = 0;
 
 void initialize() {
+    
+}
+
+void autonomous() {
     if (bot == 0) {
         if (A_Team) {
             bot = 1;
@@ -32,12 +36,9 @@ void initialize() {
     }
 }
 
-void autonomous() {}
-
 void opcontrol() {
     while (true) {
         drivetrain(bot, drive_con);
-            
 
         pros::delay(20);
     }

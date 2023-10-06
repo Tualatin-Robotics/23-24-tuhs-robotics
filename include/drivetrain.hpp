@@ -14,13 +14,15 @@ void drivetrain(int team, pros::Controller drive_con) {
 
     switch (team) {
         case 2:
-            left = left_stick;
-            right = right_stick;
+            front_left = left_stick;
+            front_right = right_stick;
+            break;
         default:
             front_left = left_stick;
             back_left = left_stick;
             front_right = right_stick;
             back_right = right_stick;
+            break;
     }
 }
 
