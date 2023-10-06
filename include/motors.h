@@ -8,8 +8,8 @@
 #define BACK_LEFT_MOTOR 3
 #define BACK_RIGHT_MOTOR 4
 
-#define RIGHT_MOTOR 1
-#define LEFT_MOTOR 2
+#define RIGHT_MOTOR 5
+#define LEFT_MOTOR 6
 
 pros::Motor front_right(FRONT_RIGHT_MOTOR);
 pros::Motor front_left(FRONT_LEFT_MOTOR, true);
