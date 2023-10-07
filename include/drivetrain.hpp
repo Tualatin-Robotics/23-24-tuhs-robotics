@@ -15,15 +15,17 @@ void drivetrain(int team, pros::Controller drive_con) {
     int rightstick_y = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
     switch (team) {
+        int left_motors = leftstick_y;
+        int right_motors = rightstick_y;
         case 2:
-            front_left = leftstick_y;
-            front_right = rightstick_y;
+            front_left = left_motors;
+            front_right = right_motors;
             break;
         default:
-            front_left = leftstick_y;
-            back_left = leftstick_y;
-            front_right = rightstick_y;
-            back_right = rightstick_y;
+            front_left = left_motors;
+            back_left = left_motors;
+            front_right = right_motors;
+            back_right = right_motors;
             break;
     }
 }
