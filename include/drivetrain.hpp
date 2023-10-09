@@ -15,8 +15,15 @@ void drivetrain(int team, pros::Controller drive_con) {
     int rightstick_y = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
     switch (team) {
-        int left_motors = leftstick_y;
-        int right_motors = rightstick_y;
+        // this is a frustratingly simple equasion that makes fancy driving
+        int left_motors = -leftstick_y + leftstick_x;
+        int right_motors = -leftstick_y - leftstick_x;
+
+        if (left_motors > 1) { left_motors = 1; }
+        if (left_motors <-1) { left_motors =-1; }
+        if (right_motors > 1) { right_motors = 1; }
+        if (right_motors <-1) { right_motors =-1; }
+
         case 2:
             front_left = left_motors;
             front_right = right_motors;
