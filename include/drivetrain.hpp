@@ -14,14 +14,14 @@ void drivetrain(int team, pros::Controller drive_con) {
 
     switch (team) {
         case 2:
-            front_left = left_stick;
-            front_right = right_stick;
+            front_left.move_velocity(MOVE_VOLT * left_stick);
+            front_right.move_voltage(MOVE_VOLT * right_stick);
             break;
         default:
-            front_left = left_stick;
-            back_left = left_stick;
-            front_right = right_stick;
-            back_right = right_stick;
+            front_left.move_velocity(MOVE_VOLT * -left_stick);
+            back_left.move_velocity(MOVE_VOLT * -left_stick);
+            front_right.move_voltage(MOVE_VOLT * right_stick);
+            back_right.move_voltage(MOVE_VOLT * right_stick);
             break;
     }
 }
