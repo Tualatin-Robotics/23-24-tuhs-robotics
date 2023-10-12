@@ -21,10 +21,10 @@ void drivetrain(int team, pros::Controller drive_con) {
             front_right.move_voltage(MOVE_VOLT * -right_stick);
             break;
         default:
-            front_left.move_voltage(MOVE_VOLT * left_stick);
-            back_left.move_voltage(MOVE_VOLT * left_stick);
-            front_right.move_voltage(MOVE_VOLT * -right_stick);
-            back_right.move_voltage(MOVE_VOLT * -right_stick);
+            front_left.move_voltage(MOVE_VOLT * -left_stick);
+            back_left.move_voltage(MOVE_VOLT * -left_stick);
+            front_right.move_voltage(MOVE_VOLT * right_stick);
+            back_right.move_voltage(MOVE_VOLT * right_stick);
             break;
     }
 }
