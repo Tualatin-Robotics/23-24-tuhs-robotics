@@ -54,6 +54,8 @@ void autonomous() {
 }
 
 void opcontrol() {
+    init_drivetrain();
+
     while (true) {
         drivetrain(team, drive_con);
 
