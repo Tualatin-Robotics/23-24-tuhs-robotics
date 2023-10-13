@@ -2,12 +2,16 @@
 #include <fstream>
 #include "motors.h"
 #include "drivetrain.hpp"
+#include "replay.hpp"
+#include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
 std::ifstream A_Team("/usd/A_Team.txt");
 std::ifstream B1_Team("/usd/B1_Team.txt");
 std::ifstream B2_Team("/usd/B2_Team.txt");
+
+using namespace std::chrono_literals;
 
 int team = 0;
 
@@ -51,13 +55,29 @@ void autonomous() {
             std::cout << "No SD card insterted" << std::endl;
         }
     }
+
+    VirtualController vc(&drive_con, true);
+    std::chrono::high_resolution_clock clock;
+
+    while (true) {
+        auto t1 = clock.now();
+
+        vc.read_from_file();
+
+        drive_auton(&vc, team);
+
+        auto t2 = clock.now();
+		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
+		pros::delay(14);
+    }
 }
 
 void opcontrol() {
     init_drivetrain();
 
     while (true) {
-        drivetrain(team, drive_con);
+        drive_op(team, drive_con);
 
         pros::delay(20);
     }
