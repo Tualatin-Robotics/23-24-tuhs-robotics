@@ -34,10 +34,18 @@ void drive_auton(VirtualController* vc, int team) {
     int left_stick = vc->ly;
 	int right_stick = vc->ry;
 
-    front_left.move_voltage(MOVE_VOLT * left_stick);
-    back_left.move_voltage(MOVE_VOLT * left_stick);
-    front_right.move_voltage(MOVE_VOLT * right_stick);
-    back_right.move_voltage(MOVE_VOLT * right_stick);
+    switch (team) {
+        case 2:
+            front_left.move_voltage(MOVE_VOLT * left_stick);
+            front_right.move_voltage(MOVE_VOLT * -right_stick);
+            break;
+        default:
+            front_left.move_voltage(MOVE_VOLT * -left_stick);
+            back_left.move_voltage(MOVE_VOLT * -left_stick);
+            front_right.move_voltage(MOVE_VOLT * right_stick);
+            back_right.move_voltage(MOVE_VOLT * right_stick);
+            break;
+    }
 }
 
 #endif

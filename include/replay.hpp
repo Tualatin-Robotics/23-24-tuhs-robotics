@@ -11,7 +11,7 @@
 //23
 
 const int file_size = 40 * 1024;
-#define read_file_name "/usd/rec_027.vrx"
+#define read_file_name "/usd/rec_01.vrx"
 
 // GOOD: "/usd/rec_027.vrx" 12 PT  (10 and 14 ms)
 
@@ -20,12 +20,13 @@ class VirtualController {
     int lx, ly, rx, ry;
     bool l1, l2, r1, r2;
     bool a, b, x, y;
+    bool d, u, l, r;
     FILE* usd_file;
     std::string file_write_name;
 
     pros::Controller* cont;
     std::string find_next_file() {
-        int i = 0;
+        int i = 1;
         
         while (true) {
             std::string temp("/usd/rec_0");
@@ -73,13 +74,18 @@ class VirtualController {
         b = cont->get_digital(pros::E_CONTROLLER_DIGITAL_B);
         x = cont->get_digital(pros::E_CONTROLLER_DIGITAL_X);
         y = cont->get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+        d = cont->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+        u = cont->get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+        l = cont->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+        r = cont->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
     }
 
     std::string encode() {
         std::stringstream ss;
         ss << lx << "," << ly << "," << rx << "," << ry << ",";
         ss << l1 << "," << l2 << "," << r1 << "," << r2 << ",";
-        ss << a << "," << b << "," << x << "," << y << std::endl;
+        ss << a << "," << b << "," << x << "," << y << ",";
+        ss << d << "," << u << "," << l << "," << r << std::endl;
         return ss.str();
     }
 
@@ -116,16 +122,25 @@ class VirtualController {
         ss >> temp;
         ss >> y;
         ss >> temp;
+
+        ss >> d;
+        ss >> temp;
+        ss >> u;
+        ss >> temp;
+        ss >> l;
+        ss >> temp;
+        ss >> r;
+        ss >> temp;
     }
 
     void write_to_file() {
-        std::ifstream A_file("/usd/A_Team.txt");
-        std::ifstream B1_file("/usd/B1_Team.txt"); 
-        std::ifstream B2_file("/usd/B2_Team.txt"); 
+        std::ifstream A_Team("/usd/A_Team.txt");
+        std::ifstream B1_Team("/usd/B1_Team.txt");
+        std::ifstream B2_Team("/usd/B2_Team.txt"); 
 
-        if(!A_file || !B1_file || !B2_file) {
-            std::cout << "No SD card insterted" << std::endl;
-        } else {
+        if(!(A_Team || B1_Team || B2_Team)) {
+            std::cout << "No SD card insterted when writing" << std::endl;
+        }else {
             
             usd_file = fopen(this->file_write_name.c_str(), "a");
             std::cout << encode();
@@ -143,11 +158,13 @@ class VirtualController {
     // Probably broken (look at this for fix)
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
-        std::ifstream file("/usd/demo.txt");
+        std::ifstream A_Team("/usd/A_Team.txt");
+        std::ifstream B1_Team("/usd/B1_Team.txt");
+        std::ifstream B2_Team("/usd/B2_Team.txt"); 
 
-        if(!file) {
-            std::cout << "No SD card insterted" << std::endl;
-        } else {
+        if(!(A_Team || B1_Team || B2_Team)) {
+            std::cout << "No SD card insterted when reading" << std::endl;
+        }else {
             if (fgets(buf, sizeof(buf), usd_file) != NULL) {
                 std::string s(buf);
                 std::cout << s;

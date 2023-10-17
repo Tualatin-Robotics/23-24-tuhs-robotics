@@ -31,12 +31,13 @@ void initialize() {
         }
         if (!A_Team && !B1_Team && !B2_Team) {
             team = 4;
-            std::cout << "No SD card insterted" << std::endl;
+            std::cout << "No SD card insterted on init" << std::endl;
         }
     }
 }
 
 void autonomous() {
+    std::cout << "Auton started" << std::endl;
     if (team == 0) {
         if (A_Team) {
             team = 1;
@@ -52,14 +53,19 @@ void autonomous() {
         }
         if (!A_Team && !B1_Team && !B2_Team) {
             team = 4;
-            std::cout << "No SD card insterted" << std::endl;
+            std::cout << "No SD card insterted in auton" << std::endl;
         }
     }
+
+    std::cout << "Auton passed file check" << std::endl;
 
     VirtualController vc(&drive_con, true);
     std::chrono::high_resolution_clock clock;
 
+    std::cout << "auton passed vc check" << std::endl;
+
     while (true) {
+        std::cout << "auton running" << std::endl;
         auto t1 = clock.now();
 
         vc.read_from_file();
@@ -76,9 +82,22 @@ void autonomous() {
 void opcontrol() {
     init_drivetrain();
 
+    VirtualController vc(&drive_con, false);
+    std::chrono::high_resolution_clock clock;
+
     while (true) {
+        auto t1 = clock.now();
+
         drive_op(team, drive_con);
 
-        pros::delay(20);
+        // Replay code
+		vc.record_frame();
+		vc.write_to_file();
+
+		// Record time for replay adjustment
+		auto t2 = clock.now();
+		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
+		pros::delay(10);
     }
 }
