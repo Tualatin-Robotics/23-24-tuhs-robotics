@@ -58,7 +58,7 @@ void autonomous() {
     }
 
     std::cout << "Auton passed file check" << std::endl;
-
+    init_drivetrain();
     VirtualController vc(&drive_con, true);
     std::chrono::high_resolution_clock clock;
 
@@ -75,7 +75,7 @@ void autonomous() {
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(14);
+		pros::delay(12); //number should be tweeked for different autons
     }
 }
 
