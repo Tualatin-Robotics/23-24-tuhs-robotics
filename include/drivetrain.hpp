@@ -29,27 +29,32 @@ void drive_op(int team, pros::Controller drive_con) {
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
         case 3:
+            // diagonal movement
             if ((left_stick_x > deadzone+10 && left_stick_y > deadzone+10) || (left_stick_y < -(deadzone+10) && left_stick_x < -(deadzone+10)) || (left_stick_x < -(deadzone+10) && left_stick_y > deadzone+10) || (left_stick_x > deadzone+10 && left_stick_y < -(deadzone+10))) {
                 diagonal = true;
-                int average = (abs(left_stick_x)+abs(left_stick_y))/2;
+                int average = (abs(left_stick_x)+abs(left_stick_y))/2; // average value for sticks
+                // if stick it top right
                 if (left_stick_x > 0 && left_stick_y > 0) {
                     front_left.move_voltage(MOVE_VOLT * average);
                     back_right.move_voltage(MOVE_VOLT * average);
                     front_right = 0;
                     back_left = 0;
                 }
+                // if stick is top left
                 if (left_stick_x < 0 && left_stick_y > 0) {
                     front_right.move_voltage(MOVE_VOLT * average);
                     back_left.move_voltage(MOVE_VOLT * -average);
                     front_left = 0;
                     back_right = 0;
                 }
+                // if stick if bottom left
                 if (left_stick_x < 0 && left_stick_y < 0) {
-                    front_left.move_voltage(MOVE_VOLT * average);
+                    front_left.move_voltage(MOVE_VOLT * -average);
                     back_right.move_voltage(MOVE_VOLT * -average);
                     front_right = 0;
                     back_left = 0;
                 }
+                // if stick is bottom right
                 if (left_stick_x > 0 && left_stick_y < 0) {
                     front_right.move_voltage(MOVE_VOLT * average);
                     back_left.move_voltage(MOVE_VOLT * -average);
@@ -60,7 +65,9 @@ void drive_op(int team, pros::Controller drive_con) {
             else {
                 diagonal = false;
             }
+            // if not moving diagonal 
             if (!diagonal) {
+                // turn left / right
                 if (left_stick_x > deadzone || left_stick_x < -deadzone) {
                     front_left.move_voltage(MOVE_VOLT * left_stick_x);
                     front_right.move_voltage(MOVE_VOLT * left_stick_x);
@@ -68,13 +75,14 @@ void drive_op(int team, pros::Controller drive_con) {
                     back_right.move_voltage(MOVE_VOLT * left_stick_x);
                     
                 }
+                // make sure motors reset to 0
                 else {
                     front_left = 0;
                     front_right = 0;
                     back_left = 0;
                     back_right = 0;
                 }
-
+                // forward / backwards
                 if (left_stick_y > deadzone || left_stick_y < -deadzone) {
                     front_left.move_voltage(MOVE_VOLT * left_stick_y);
                     front_right.move_voltage(MOVE_VOLT * -left_stick_y);
