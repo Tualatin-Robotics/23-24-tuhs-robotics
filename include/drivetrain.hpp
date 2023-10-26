@@ -6,12 +6,16 @@
 
 int deadzone = 10;
 bool diagonal = false;
+bool acorngrabbing = true; // true means it is closed, false means it is open
+int acorngrabvolts = 128;
 
 void init_drivetrain() {
     front_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     front_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void drive_op(int team, pros::Controller drive_con) {
@@ -20,6 +24,7 @@ void drive_op(int team, pros::Controller drive_con) {
     int right_stick_y = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
     int left_stick_x = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
     int right_stick_x = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int right_trigger = drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
 
     switch (team) {
         case 1:
@@ -27,6 +32,16 @@ void drive_op(int team, pros::Controller drive_con) {
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            if (right_trigger) {
+                if (acorngrabbing) {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
+                } else {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                }
+                acorngrabbing = (acorngrabbing != true);
+            }
             break;
         case 3:
             // diagonal movement
