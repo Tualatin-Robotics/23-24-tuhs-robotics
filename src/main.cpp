@@ -3,6 +3,7 @@
 #include "motors.h"
 #include "drivetrain.hpp"
 #include "replay.hpp"
+#include "acorn_grabbing.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -71,6 +72,8 @@ void autonomous() {
         vc.read_from_file();
 
         drive_auton(&vc, team);
+
+        
 
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
