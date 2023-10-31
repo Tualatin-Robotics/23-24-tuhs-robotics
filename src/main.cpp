@@ -18,11 +18,11 @@ int team = 0;
 void initialize() {
     if (team == 0) {
         if (A_Team) {
-            team = 1;
+            team = 3;
             std::cout << "A team" << std::endl;
         }
         if (B1_Team) {
-            team = 2;
+            team = 3;
             std::cout << "B team" << std::endl;
         }
         if (B2_Team) {
@@ -30,7 +30,7 @@ void initialize() {
             std::cout << "C team" << std::endl;
         }
         if (!A_Team && !B1_Team && !B2_Team) {
-            team = 4;
+            team = 3;
             std::cout << "No SD card insterted on init" << std::endl;
         }
     }
