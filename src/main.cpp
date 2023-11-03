@@ -3,6 +3,7 @@
 #include "motors.h"
 #include "drivetrain.hpp"
 #include "replay.hpp"
+#include "acorn_grabbing.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -72,6 +73,8 @@ void autonomous() {
 
         drive_auton(&vc, team);
 
+        acorn_grabbing_auton(&vc, team);
+
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
@@ -89,6 +92,8 @@ void opcontrol() {
         auto t1 = clock.now();
 
         drive_op(team, drive_con);
+
+        acorn_grabbing_op(team, drive_con);
 
         // Replay code
 		vc.record_frame();

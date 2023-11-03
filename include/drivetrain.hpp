@@ -4,11 +4,6 @@
 #include "replay.hpp"
 #include "motors.h"
 
-int deadzone = 10;
-bool diagonal = false;
-bool acorngrabbing = true; // true means it is closed, false means it is open
-int acorngrabvolts = 64;
-
 void init_drivetrain() {
     front_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     front_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -33,66 +28,62 @@ void drive_op(int team, pros::Controller drive_con) {
 
     int step = 0;
 
-    switch (team) {
-        case 1:
-            front_left.move_voltage(MOVE_VOLT * -left_stick_y);
-            back_left.move_voltage(MOVE_VOLT * -left_stick_y);
-            front_right.move_voltage(MOVE_VOLT * right_stick_y);
-            back_right.move_voltage(MOVE_VOLT * right_stick_y);
+    int right_motors = left_stick_y + left_stick_x;
+    int left_motors = left_stick_y - left_stick_x;
 
-            if (left_bumper) {
-                acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-            } else if (left_trigger) {
-                acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
-            } else {
-                acorn_grab_left.move_voltage(0);
-            }
+    switch (team) {
+        //A Team
+        case 1:
+            front_left.move_voltage(MOVE_VOLT * left_stick_y);
+            back_left.move_voltage(MOVE_VOLT * left_stick_y);
+            front_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
+        //B1 Team
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
-            if (right_trigger) {
-                if (acorngrabbing) {
-                    acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-                    acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                } else {
-                    acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                    acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
-                }
-                acorngrabbing = (acorngrabbing != true);
-            }
-            /*
-            if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_A) && drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
-                if (step < 1) {
-                    acorn_grab_left.move_voltage(MOVE_VOLT * 16);
-                    acorn_grab_right.move_voltage(MOVE_VOLT * 16);
-                } else if (step < 2) {
-                    acorn_grab_left.move_voltage(MOVE_VOLT * -16);
-                    acorn_grab_right.move_voltage(MOVE_VOLT * -16);
-                } else {
-                    step = 0;
-                }
-                step += 1;
-            }*/
             break;
+        //B2 Team
         case 3:
-            front_left.move_voltage(MOVE_VOLT * right_motors);
-            back_left.move_voltage(MOVE_VOLT * left_motors);
-            front_right.move_voltage(MOVE_VOLT * -left_motors);
-            back_right.move_voltage(MOVE_VOLT * -right_motors);
+            front_right.move_voltage(MOVE_VOLT * -right_motors);
+            front_left.move_voltage(MOVE_VOLT * -left_motors);
+            back_right.move_voltage(MOVE_VOLT * left_motors);
+            back_left.move_voltage(MOVE_VOLT * right_motors);
 
-            if (abs(right_stick_x) > 1) {
+            if (abs(right_stick_x) > 0 && !(abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
                 front_left.move_voltage(MOVE_VOLT * right_stick_x);
                 back_left.move_voltage(MOVE_VOLT * right_stick_x);
                 front_right.move_voltage(MOVE_VOLT * right_stick_x);
                 back_right.move_voltage(MOVE_VOLT * right_stick_x);
             }
+            else if (abs(right_stick_x) > 0 && (abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
+                if (abs(left_stick_x) > 2 && abs(left_stick_y) > 2) {
+                    //going diagonal with slight dead zone
+                    if (left_stick_y > 0 && left_stick_x > 0) {
+                        //top right
+                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y > 0 && left_stick_x < 0) {
+                        //top left
+                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y < 0 && left_stick_x < 0) {
+                        //bottom left
+                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y < 0 && left_stick_x > 0) {
+                        //bottom right
+                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                }
+            }
             break;
         default:
-            front_left.move_voltage(MOVE_VOLT * left_stick_y);
-            back_left.move_voltage(MOVE_VOLT * left_stick_y);
-            front_right.move_voltage(MOVE_VOLT * -right_stick_y);
-            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
     }
 }
@@ -103,20 +94,58 @@ void drive_auton(VirtualController* vc, int team) {
     int left_stick_x = vc->lx;
     int right_stick_x = vc->rx;
 
+    int right_motors = left_stick_y + left_stick_x;
+    int left_motors = left_stick_y - left_stick_x;
+
     switch (team) {
+        case 1:
+            front_left.move_voltage(MOVE_VOLT * -left_stick_y);
+            back_left.move_voltage(MOVE_VOLT * -left_stick_y);
+            front_right.move_voltage(MOVE_VOLT * right_stick_y);
+            back_right.move_voltage(MOVE_VOLT * right_stick_y);
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
         case 3:
-            front_left.move_voltage(MOVE_VOLT * left_stick_y);
-            front_right.move_voltage(MOVE_VOLT * -left_stick_y);
+            front_right.move_voltage(MOVE_VOLT * -right_motors);
+            front_left.move_voltage(MOVE_VOLT * -left_motors);
+            back_right.move_voltage(MOVE_VOLT * left_motors);
+            back_left.move_voltage(MOVE_VOLT * right_motors);
+
+            if (abs(right_stick_x) > 0 && !(abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
+                front_left.move_voltage(MOVE_VOLT * right_stick_x);
+                back_left.move_voltage(MOVE_VOLT * right_stick_x);
+                front_right.move_voltage(MOVE_VOLT * right_stick_x);
+                back_right.move_voltage(MOVE_VOLT * right_stick_x);
+            }
+            else if (abs(right_stick_x) > 0 && (abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
+                if (abs(left_stick_x) > 2 && abs(left_stick_y) > 2) {
+                    //going diagonal with slight dead zone
+                    if (left_stick_y > 0 && left_stick_x > 0) {
+                        //top right
+                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y > 0 && left_stick_x < 0) {
+                        //top left
+                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y < 0 && left_stick_x < 0) {
+                        //bottom left
+                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                    else if (left_stick_y < 0 && left_stick_x > 0) {
+                        //bottom right
+                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
+                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
+                    }
+                }
+            }
             break;
         default:
-            front_left.move_voltage(MOVE_VOLT * -left_stick_y);
-            back_left.move_voltage(MOVE_VOLT * -left_stick_y);
-            front_right.move_voltage(MOVE_VOLT * right_stick_y);
-            back_right.move_voltage(MOVE_VOLT * right_stick_y);
             break;
     }
 }
