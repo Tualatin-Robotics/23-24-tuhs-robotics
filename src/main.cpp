@@ -30,7 +30,7 @@ void initialize() {
             std::cout << "C team" << std::endl;
         }
         if (!A_Team && !B1_Team && !B2_Team) {
-            team = 3;
+            team = 4;
             std::cout << "No SD card insterted on init" << std::endl;
         }
     }

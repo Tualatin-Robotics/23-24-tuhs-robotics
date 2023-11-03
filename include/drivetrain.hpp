@@ -31,6 +31,8 @@ void drive_op(int team, pros::Controller drive_con) {
     int right_motors = left_stick_y + left_stick_x;
     int left_motors = left_stick_y - left_stick_x;
 
+    int step = 0;
+
     switch (team) {
         case 1:
             front_left.move_voltage(MOVE_VOLT * -left_stick_y);
@@ -49,17 +51,29 @@ void drive_op(int team, pros::Controller drive_con) {
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
-            if (right_trigger == false) { break; }
-            if (acorngrabbing) {
-                acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-            } else {
-                acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
+            if (right_trigger) {
+                if (acorngrabbing) {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                } else {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
+                }
+                acorngrabbing = (acorngrabbing != true);
             }
-            acorngrabbing = (acorngrabbing != true);
-
-            
+            /*
+            if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_A) && drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+                if (step < 1) {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * 16);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * 16);
+                } else if (step < 2) {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * -16);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * -16);
+                } else {
+                    step = 0;
+                }
+                step += 1;
+            }*/
             break;
         case 3:
             front_left.move_voltage(MOVE_VOLT * right_motors);
