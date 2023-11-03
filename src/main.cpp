@@ -73,7 +73,7 @@ void autonomous() {
 
         drive_auton(&vc, team);
 
-        
+        acorn_grabbing_auton(&vc, team);
 
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
@@ -92,6 +92,8 @@ void opcontrol() {
         auto t1 = clock.now();
 
         drive_op(team, drive_con);
+
+        acorn_grabbing_op(team, drive_con);
 
         // Replay code
 		vc.record_frame();

@@ -9,14 +9,14 @@ int acorngrabvolts = 64;
 
 void acorn_grabbing_op(int team, pros::Controller drive_con) {
     if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && !acorngrabbing) {
-        acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-        acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-        pros::delay(10); //value will need tweaking
-        acorngrabbing = true;
-    } else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && acorngrabbing) {
         acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
         acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
-        pros::delay(10); //value will need tweaking
+        pros::delay(5); //value will need tweaking
+        acorngrabbing = true;
+    } else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2) && acorngrabbing) {
+        acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
+        acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
+        pros::delay(5); //value will need tweaking
         acorngrabbing = false;
     }
 }
@@ -25,12 +25,14 @@ void acorn_grabbing_auton(VirtualController* vc, int team) {
     {
         case 2:
             if (vc->r2 && !acorngrabbing) {
-                acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                acorngrabbing = true;
-            } else if (vc->r2 && acorngrabbing) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
+                pros::delay(5);
+                acorngrabbing = true;
+            } else if (vc->r2 && acorngrabbing) {
+                acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
+                acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                pros::delay(5);
                 acorngrabbing = false;
             }
             break;
