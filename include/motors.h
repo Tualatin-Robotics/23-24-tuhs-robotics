@@ -22,7 +22,4 @@ pros::Motor back_left(BACK_LEFT_MOTOR);
 pros::Motor acorn_grab_left(ACORN_GRAB_LEFT_MOTOR);
 pros::Motor acorn_grab_right(ACORN_GRAB_RIGHT_MOTOR);
 
-pros::Motor acorn_grab_left(ACORN_GRAB_LEFT_MOTOR);
-pros::Motor acorn_grab_right(ACORN_GRAB_RIGHT_MOTOR);
-
 #endif

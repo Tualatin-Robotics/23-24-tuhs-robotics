@@ -28,9 +28,6 @@ void drive_op(int team, pros::Controller drive_con) {
 
     int step = 0;
 
-    int right_motors = left_stick_y + left_stick_x;
-    int left_motors = left_stick_y - left_stick_x;
-
     switch (team) {
         //A Team
         case 1:
@@ -46,42 +43,10 @@ void drive_op(int team, pros::Controller drive_con) {
             break;
         //B2 Team
         case 3:
-            front_right.move_voltage(MOVE_VOLT * -right_motors);
-            front_left.move_voltage(MOVE_VOLT * -left_motors);
-            back_right.move_voltage(MOVE_VOLT * left_motors);
-            back_left.move_voltage(MOVE_VOLT * right_motors);
-
-            if (abs(right_stick_x) > 0 && !(abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
-                front_left.move_voltage(MOVE_VOLT * right_stick_x);
-                back_left.move_voltage(MOVE_VOLT * right_stick_x);
-                front_right.move_voltage(MOVE_VOLT * right_stick_x);
-                back_right.move_voltage(MOVE_VOLT * right_stick_x);
-            }
-            else if (abs(right_stick_x) > 0 && (abs(left_stick_y) > 0 || abs(left_stick_x) > 0)) {
-                if (abs(left_stick_x) > 2 && abs(left_stick_y) > 2) {
-                    //going diagonal with slight dead zone
-                    if (left_stick_y > 0 && left_stick_x > 0) {
-                        //top right
-                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
-                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
-                    }
-                    else if (left_stick_y > 0 && left_stick_x < 0) {
-                        //top left
-                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
-                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
-                    }
-                    else if (left_stick_y < 0 && left_stick_x < 0) {
-                        //bottom left
-                        front_right.move_voltage(MOVE_VOLT * right_stick_x);
-                        back_left.move_voltage(MOVE_VOLT * right_stick_x);
-                    }
-                    else if (left_stick_y < 0 && left_stick_x > 0) {
-                        //bottom right
-                        front_left.move_voltage(MOVE_VOLT * right_stick_x);
-                        back_right.move_voltage(MOVE_VOLT * right_stick_x);
-                    }
-                }
-            }
+            front_right.move_voltage(MOVE_VOLT * (-right_motors + right_stick_x));
+            front_left.move_voltage(MOVE_VOLT * (-left_motors + right_stick_x));
+            back_right.move_voltage(MOVE_VOLT * (left_motors + right_stick_x));
+            back_left.move_voltage(MOVE_VOLT * (right_motors + right_stick_x));
             break;
         default:
             break;
