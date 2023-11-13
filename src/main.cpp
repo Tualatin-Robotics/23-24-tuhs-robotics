@@ -91,9 +91,9 @@ void opcontrol() {
     while (true) {
         auto t1 = clock.now();
 
-        drive_op(team, drive_con);
+        drive_op(drive_con, team);
 
-        acorn_grabbing_op(team, drive_con);
+        acorn_grabbing_op(drive_con, team);
 
         // Replay code
 		vc.record_frame();
