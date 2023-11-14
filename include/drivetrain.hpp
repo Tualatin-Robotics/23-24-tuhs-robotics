@@ -14,10 +14,10 @@ void init_drivetrain() {
 }
 
 void drive(int * c, int team) {
-    int left_stick_y = c[1];
-	int right_stick_y = c[2];
-    int left_stick_x = c[3];
-    int right_stick_x = c[4];
+    int left_stick_x = c[1];
+	int left_stick_y = c[2];
+    int right_stick_x = c[3];
+    int right_stick_y = c[4];
 
     int right_motors = left_stick_y + left_stick_x;
     int left_motors = left_stick_y - left_stick_x;
@@ -50,26 +50,22 @@ void drive(int * c, int team) {
 void drive_op(pros::Controller drive_con, int team) {
 
     int inputs[4] = {
-        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
-        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y),
         drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X),
-        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)
+        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
+        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X),
+        drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)
     };
 
     drive(inputs, team);
 }
 
 void drive_auton(VirtualController* vc, int team) {
-    int left_stick_y = vc->ly;
-	int right_stick_y = vc->ry;
-    int left_stick_x = vc->lx;
-    int right_stick_x = vc->rx;
 
     int inputs[4] = {
-        vc->ly,
-        vc->ry,
         vc->lx,
-        vc->rx
+        vc->ly,
+        vc->rx,
+        vc->ry
     };
 
     drive(inputs, team);

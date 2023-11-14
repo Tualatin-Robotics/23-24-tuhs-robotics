@@ -5,12 +5,15 @@
             "-c",
             "-target",
             "armv7ar-none-none-eabi",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/arm-none-eabi/thumb/v7-a+simd/softfp",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/backward",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/include",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/include-fixed",
-            "-isystem/Users/Admin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/arm-none-eabi/thumb/v7-a+simd/softfp",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/backward",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/include",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/include-fixed",
+            "-isystemc:\\users\\robotics\\appdata\\roaming\\code\\user\\globalstorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include",
             "-iquote./include",
             "-iquote./include/okapi/squiggles",
             "-iquote./include/./",
@@ -31,9 +34,9 @@
             "--std=gnu++17",
             "-o",
             "bin/main.cpp.o",
-            "src/main.cpp"
+            "src\\main.cpp"
         ],
-        "directory": "/Users/Admin/Documents/GitHub/ths-robotics-fork",
-        "file": "src/main.cpp"
+        "directory": "C:\\Users\\robotics\\Documents\\GitHub\\ths-robotics-fork",
+        "file": "src\\main.cpp"
     }
 ]
