@@ -6,11 +6,18 @@
 
 bool acorngrabbing = true; // true means it is closed, false means it is open
 int acorngrabvolts = 64;
-int acorngrabtime = 200;
+int idlegrabvolts = 16;
+int acorngrabtime = 125;
 
 void init_acorngrab() {
-    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
+    acorn_grab_left.move_voltage(MOVE_VOLT * -16);
+    acorn_grab_right.move_voltage(MOVE_VOLT * 16);
+    pros::delay(750);
+    acorn_grab_left.move_voltage(0);
+    acorn_grab_right.move_voltage(0);
 }
 
 void acorngrab(int * c, int team) {
@@ -38,8 +45,8 @@ void acorngrab(int * c, int team) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 pros::delay(acorngrabtime); //value will need tweaking
-                acorn_grab_left.move_voltage(0);
-                acorn_grab_right.move_voltage(0);
+                acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
+                acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
                 acorngrabbing = false;
             }
             break;
