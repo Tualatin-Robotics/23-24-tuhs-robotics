@@ -26,6 +26,7 @@ void acorngrab(int * c, int team) {
     int left_bumper = c[2];
 
     switch (team) {
+        // A Team
         case 1:
             if (left_trigger) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
@@ -33,7 +34,8 @@ void acorngrab(int * c, int team) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
             }
             break;
-        case 2:
+        // B or C Team
+        case 2: case 3:
             if (right_trigger && !acorngrabbing) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
@@ -49,8 +51,6 @@ void acorngrab(int * c, int team) {
                 acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
                 acorngrabbing = false;
             }
-            break;
-        case 3:
             break;
     }
 }
