@@ -3,7 +3,7 @@
 #include "motors.h"
 #include "drivetrain.hpp"
 #include "replay.hpp"
-#include "acorn_grabbing.hpp"
+#include "acorngrab.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -31,7 +31,7 @@ void initialize() {
             std::cout << "C team" << std::endl;
         }
         if (!A_Team && !B1_Team && !B2_Team) {
-            team = 4;
+            team = 2;
             std::cout << "No SD card insterted on init" << std::endl;
         }
     }
@@ -60,6 +60,7 @@ void autonomous() {
 
     std::cout << "Auton passed file check" << std::endl;
     init_drivetrain();
+    init_acorngrab();
     VirtualController vc(&drive_con, true);
     std::chrono::high_resolution_clock clock;
 
@@ -73,7 +74,7 @@ void autonomous() {
 
         drive_auton(&vc, team);
 
-        acorn_grabbing_auton(&vc, team);
+        acorngrab_auton(&vc, team);
 
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
@@ -84,6 +85,7 @@ void autonomous() {
 
 void opcontrol() {
     init_drivetrain();
+    init_acorngrab();
 
     VirtualController vc(&drive_con, false);
     std::chrono::high_resolution_clock clock;
@@ -93,7 +95,7 @@ void opcontrol() {
 
         drive_op(drive_con, team);
 
-        acorn_grabbing_op(drive_con, team);
+        acorngrab_op(drive_con, team);
 
         // Replay code
 		vc.record_frame();

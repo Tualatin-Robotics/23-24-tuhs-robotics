@@ -9,15 +9,13 @@ void init_drivetrain() {
     front_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void drive(int * c, int team) {
-    int left_stick_x = c[1];
-	int left_stick_y = c[2];
-    int right_stick_x = c[3];
-    int right_stick_y = c[4];
+    int left_stick_x = c[0];
+	int left_stick_y = c[1];
+    int right_stick_x = c[2];
+    int right_stick_y = c[3];
 
     int right_motors = left_stick_y + left_stick_x;
     int left_motors = left_stick_y - left_stick_x;

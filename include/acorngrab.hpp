@@ -6,11 +6,17 @@
 
 bool acorngrabbing = true; // true means it is closed, false means it is open
 int acorngrabvolts = 64;
+int acorngrabtime = 200;
 
-void acorn_grabbing(int * c, int team) {
-    int right_trigger = c[1];
-	int left_trigger = c[2];
-    int left_bumper = c[3];
+void init_acorngrab() {
+    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+}
+
+void acorngrab(int * c, int team) {
+    int right_trigger = c[0];
+	int left_trigger = c[1];
+    int left_bumper = c[2];
 
     switch (team) {
         case 1:
@@ -21,20 +27,17 @@ void acorn_grabbing(int * c, int team) {
             }
             break;
         case 2:
-            if (!right_trigger) {
-                break;
-            }
-            if (!acorngrabbing) {
+            if (right_trigger && !acorngrabbing) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
-                pros::delay(5); //value will need tweaking
+                pros::delay(acorngrabtime); //value will need tweaking
                 acorn_grab_left.move_voltage(0);
                 acorn_grab_right.move_voltage(0);
                 acorngrabbing = true;
-            } else {
+            } else if (right_trigger && acorngrabbing) {
                 acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                pros::delay(5); //value will need tweaking
+                pros::delay(acorngrabtime); //value will need tweaking
                 acorn_grab_left.move_voltage(0);
                 acorn_grab_right.move_voltage(0);
                 acorngrabbing = false;
@@ -45,18 +48,18 @@ void acorn_grabbing(int * c, int team) {
     }
 }
 
-void acorn_grabbing_op(pros::Controller drive_con, int team) {
+void acorngrab_op(pros::Controller drive_con, int team) {
     int inputs[3] = {
         drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2),
-        drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2),
-        drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)
+        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L2),
+        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L1)
         
     };
 
-    acorn_grabbing(inputs, team);
+    acorngrab(inputs, team);
 }
 
-void acorn_grabbing_auton(VirtualController* vc, int team) {
+void acorngrab_auton(VirtualController* vc, int team) {
     /*int inputs[2] = {
         
     };*/
