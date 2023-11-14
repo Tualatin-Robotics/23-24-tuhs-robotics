@@ -9,8 +9,8 @@ int acorngrabvolts = 64;
 int acorngrabtime = 200;
 
 void init_acorngrab() {
-    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
 void acorngrab(int * c, int team) {
