@@ -15,9 +15,9 @@ void init_acorngrab() {
 }
 
 void acorngrab(int * c, int team) {
-    int right_trigger = c[0];
-	int left_trigger = c[1];
-    int left_bumper = c[2];
+    int left_trigger = c[0];
+	int right_trigger = c[1];
+    int right_bumper = c[2];
 
     switch (team) {
         // A Team
@@ -51,9 +51,9 @@ void acorngrab(int * c, int team) {
 
 void acorngrab_op(pros::Controller drive_con, int team) {
     int inputs[3] = {
-        drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2),
-        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L2),
-        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L1)
+        drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2),
+        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2),
+        drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)
         
     };
 
