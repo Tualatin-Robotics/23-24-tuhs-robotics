@@ -9,7 +9,7 @@
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
 std::ifstream A_Team("/usd/A_Team.txt");
-std::ifstream B1_Team("/usd/B1_Team.txt");
+std::ifstream B_Team("/usd/B_Team.txt");
 std::ifstream C_Team("/usd/C_Team.txt");
 
 using namespace std::chrono_literals;
@@ -30,6 +30,7 @@ void initialize() {
             team = 3;
             std::cout << "C team" << std::endl;
         }
+        if (!A_Team && !B_Team && !C_Team) {
             std::cout << "No SD card insterted on init" << std::endl;
         }
     }
@@ -42,7 +43,7 @@ void autonomous() {
             team = 1;
             std::cout << "A team" << std::endl;
         }
-        if (B1_Team) {
+        if (B_Team) {
             team = 2;
             std::cout << "B team" << std::endl;
         }
@@ -50,9 +51,8 @@ void autonomous() {
             team = 3;
             std::cout << "C team" << std::endl;
         }
-        if (!A_Team && !B1_Team && !C_Team) {
-            team = 4;
-            std::cout << "No SD card insterted in auton" << std::endl;
+        if (!A_Team && !B_Team && !C_Team) {
+            std::cout << "No SD card insterted on init" << std::endl;
         }
     }
 
