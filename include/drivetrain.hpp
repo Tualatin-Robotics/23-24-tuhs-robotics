@@ -9,6 +9,9 @@ void init_drivetrain() {
     front_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     back_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+    middle_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    middle_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void drive(int * c, int team) {
@@ -27,6 +30,8 @@ void drive(int * c, int team) {
             back_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
             back_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            middle_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            middle_left.move_voltage(MOVE_VOLT * left_stick_y);
             break;
         //B Team
         case 2:
