@@ -28,12 +28,12 @@ void drive(int * c, int team) {
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
             back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
-        //B1 Team
+        //B Team
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
-        //B2 Team
+        //C Team
         case 3:
             front_right.move_voltage(MOVE_VOLT * (-right_motors + right_stick_x));
             front_left.move_voltage(MOVE_VOLT * (-left_motors + right_stick_x));
@@ -41,6 +41,10 @@ void drive(int * c, int team) {
             back_left.move_voltage(MOVE_VOLT * (right_motors + right_stick_x));
             break;
         default:
+            front_left.move_voltage(MOVE_VOLT * left_stick_y);
+            back_left.move_voltage(MOVE_VOLT * left_stick_y);
+            front_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
     }
 }
