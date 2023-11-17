@@ -4,10 +4,11 @@
 #include "replay.hpp"
 #include "motors.h"
 
-bool acorngrabbing = true; // true means it is closed, false means it is open
+bool acorngrabbing = false; // true means it is closed, false means it is open
+bool moving = false;
 int acorngrabvolts = 64;
-int idlegrabvolts = 16;
-int acorngrabtime = 125;
+int idlegrabvolts = 32;
+int acorngrabtime = 500;
 
 void init_acorngrab() {
     acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -31,19 +32,24 @@ void acorngrab(int * c, int team) {
         // B or C Team
         case 2: case 3:
             if (right_trigger && !acorngrabbing) {
+                //moving = true;
+                std::cout << "Right Trigger pressed" << std::endl;
                 acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
                 pros::delay(acorngrabtime); //value will need tweaking
-                acorn_grab_left.move_voltage(0);
-                acorn_grab_right.move_voltage(0);
+                acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
+                acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
                 acorngrabbing = true;
+                //moving = false;
             } else if (right_trigger && acorngrabbing) {
+                //moving = true;
                 acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
                 pros::delay(acorngrabtime); //value will need tweaking
                 acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
                 acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
                 acorngrabbing = false;
+                //moving = true;
             }
             break;
     }
@@ -61,11 +67,13 @@ void acorngrab_op(pros::Controller drive_con, int team) {
 }
 
 void acorngrab_auton(VirtualController* vc, int team) {
-    /*int inputs[2] = {
-        
-    };*/
+    int inputs[3] = {
+        vc->r2,
+        vc->l2,
+        vc->l1
+    };
 
-    //acorn_grabbing(inputs, team);
+    acorngrab(inputs, team);
 }
 
 #endif

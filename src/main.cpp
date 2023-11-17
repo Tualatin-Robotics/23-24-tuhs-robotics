@@ -14,7 +14,7 @@ std::ifstream C_Team("/usd/C_Team.txt");
 
 using namespace std::chrono_literals;
 
-int team = 0;
+int team = 2;
 
 void initialize() {
     if (team == 0) {
@@ -32,6 +32,7 @@ void initialize() {
         }
         if (!A_Team && !B_Team && !C_Team) {
             std::cout << "No SD card insterted on init" << std::endl;
+            team = 4;
         }
     }
 }
@@ -53,6 +54,7 @@ void autonomous() {
         }
         if (!A_Team && !B_Team && !C_Team) {
             std::cout << "No SD card insterted on init" << std::endl;
+            team = 4;
         }
     }
 
