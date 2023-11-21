@@ -4,7 +4,7 @@
 #include "replay.hpp"
 #include "motors.h"
 
-bool acorngrabbing = false; // true means it is closed, false means it is open
+bool acorngrabbing = true; // true means it is closed, false means it is open
 bool moving = false;
 int acorngrabvolts = 64;
 int idlegrabvolts = 32;
@@ -31,25 +31,26 @@ void acorngrab(int * c, int team) {
             break;
         // B or C Team
         case 2: case 3:
+            
             if (right_trigger && !acorngrabbing) {
-                //moving = true;
-                std::cout << "Right Trigger pressed" << std::endl;
-                acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
-                pros::delay(acorngrabtime); //value will need tweaking
-                acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
-                acorngrabbing = true;
-                //moving = false;
+                pros::Task grab {[=] {
+                    std::cout << "Right Trigger pressed" << std::endl;
+                    acorn_grab_left.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * acorngrabvolts);
+                    pros::delay(acorngrabtime); //value will need tweaking
+                    acorn_grab_left.move_voltage(MOVE_VOLT * -idlegrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
+                    acorngrabbing = true;
+                }};
             } else if (right_trigger && acorngrabbing) {
-                //moving = true;
-                acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
-                pros::delay(acorngrabtime); //value will need tweaking
-                acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
-                acorn_grab_right.move_voltage(MOVE_VOLT * idlegrabvolts);
-                acorngrabbing = false;
-                //moving = true;
+                pros::Task ungrab {[=] {
+                    acorn_grab_left.move_voltage(MOVE_VOLT * acorngrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * -acorngrabvolts);
+                    pros::delay(acorngrabtime); //value will need tweaking
+                    acorn_grab_left.move_voltage(MOVE_VOLT * idlegrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_VOLT * -idlegrabvolts);
+                    acorngrabbing = false;
+                }};
             }
             break;
     }
