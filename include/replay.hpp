@@ -157,10 +157,10 @@ class VirtualController {
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
         std::ifstream A_Team("/usd/A_Team.txt");
-        std::ifstream B1_Team("/usd/B_Team.txt");
-        std::ifstream B2_Team("/usd/C_Team.txt"); 
+        std::ifstream B_Team("/usd/B_Team.txt");
+        std::ifstream C_Team("/usd/C_Team.txt"); 
 
-        if(!(A_Team || B1_Team || B2_Team)) {
+        if(!(A_Team || B_Team || C_Team)) {
             std::cout << "No SD card insterted when reading" << std::endl;
         }else {
             if (fgets(buf, sizeof(buf), usd_file) != NULL) {
