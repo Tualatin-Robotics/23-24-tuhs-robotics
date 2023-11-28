@@ -32,6 +32,7 @@ void initialize() {
         }
         if (!A_Team && !B_Team && !C_Team) {
             std::cout << "No SD card insterted on init" << std::endl;
+            team = 4;
         }
     }
 }
@@ -53,6 +54,7 @@ void autonomous() {
         }
         if (!A_Team && !B_Team && !C_Team) {
             std::cout << "No SD card insterted on init" << std::endl;
+            team = 4;
         }
     }
 
@@ -77,7 +79,7 @@ void autonomous() {
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(12); //number should be tweeked for different autons
+		pros::delay(11); //number should be tweeked for different autons
     }
 }
 
