@@ -3,7 +3,9 @@
 
 #include "main.h"
 
-float const MOVE_VOLT = 12000 / 128;
+float const MOVE_TOTAL = 12000;
+float const MOVE_VOLT = MOVE_TOTAL / 128;
+
 
 #define FRONT_LEFT_MOTOR 1
 #define FRONT_RIGHT_MOTOR 10
