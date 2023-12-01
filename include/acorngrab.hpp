@@ -9,7 +9,9 @@ bool reloaded = true;
 float acorngrabvolts = 1;
 float acornungrabvolts = 0.25;
 float idlegrabvolts = 1;
-int acorngrabtime[5] = {0, 0, 500, 500, 0};
+int acorngrabtime[5] {
+    0, 0, 500, 500, 0
+};
 
 void init_acorngrab() {
     acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -45,14 +47,14 @@ void acorngrab(int * c, int team) {
                 }};
             }
             break;
-        // B or C Team
-        case 2: case 3:
+        //B Team
+        case 2: 
             if (right_trigger && !acorngrabbing) {
                 pros::Task grab {[=] {
                     std::cout << "Right Trigger pressed" << std::endl;
                     acorn_grab_left.move_voltage(MOVE_TOTAL * -acorngrabvolts);
                     acorn_grab_right.move_voltage(MOVE_TOTAL * acorngrabvolts);
-                    pros::delay(acorngrabtime); //value will need tweaking
+                    pros::delay(acorngrabtime[team]); //value will need tweaking
                     acorn_grab_left.move_voltage(MOVE_TOTAL * -idlegrabvolts);
                     acorn_grab_right.move_voltage(MOVE_TOTAL * idlegrabvolts);
                     acorngrabbing = true;
@@ -61,9 +63,29 @@ void acorngrab(int * c, int team) {
                 pros::Task ungrab {[=] {
                     acorn_grab_left.move_voltage(MOVE_TOTAL * acornungrabvolts);
                     acorn_grab_right.move_voltage(MOVE_TOTAL * -acornungrabvolts);
-                    pros::delay(acorngrabtime); //value will need tweaking
+                    pros::delay(acorngrabtime[team]); //value will need tweaking
                     acorn_grab_left.move_voltage(MOVE_TOTAL * idlegrabvolts);
                     acorn_grab_right.move_voltage(MOVE_TOTAL * -idlegrabvolts);
+                    acorngrabbing = false;
+                }};
+            }
+            break;
+        //C Team
+        case 3:
+            if (right_trigger && !acorngrabbing) {
+                pros::Task grab {[=] {
+                    std::cout << "Right Trigger pressed" << std::endl;
+                    acorn_grab_left.move_voltage(MOVE_TOTAL * -acorngrabvolts);
+                    pros::delay(acorngrabtime[team]); //value will need tweaking
+                    acorn_grab_left.move_voltage(MOVE_TOTAL * -idlegrabvolts);
+                    acorngrabbing = true;
+                }};
+            } else if (right_trigger && acorngrabbing) {
+                pros::Task ungrab {[=] {
+                    acorn_grab_left.move_voltage(MOVE_TOTAL * acornungrabvolts);
+                    acorn_grab_right.move_voltage(MOVE_TOTAL * -acornungrabvolts);
+                    pros::delay(acorngrabtime[team]); //value will need tweaking
+                    acorn_grab_left.move_voltage(MOVE_TOTAL * idlegrabvolts);
                     acorngrabbing = false;
                 }};
             }
