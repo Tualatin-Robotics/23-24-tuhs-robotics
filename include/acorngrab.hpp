@@ -9,7 +9,7 @@ bool reloaded = true;
 float acorngrabvolts = 1;
 float acornungrabvolts = 0.25;
 float idlegrabvolts = 1;
-int acorngrabtime = 500;
+int acorngrabtime[5] = {0, 0, 500, 500, 0};
 
 void init_acorngrab() {
     acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
