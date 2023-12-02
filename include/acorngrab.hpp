@@ -14,8 +14,8 @@ int acorngrabtime[5] {
 };
 
 void init_acorngrab() {
-    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    acorn_grab_left.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    acorn_grab_right.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void acorngrab(int * c, int team) {
@@ -34,18 +34,26 @@ void acorngrab(int * c, int team) {
             } else {
                 acorn_grab_left.move_voltage(0);
             }
-
+            
+            //endgame
+            if (right_bumper && right_trigger) {
+                acorn_grab_right.move_voltage(-12000);
+            }
+            
+            /* shooter switched for endgame save this for later
             if (right_bumper && reloaded) {
                 pros::Task {[=] {
                     reloaded = false;
                     acorn_grab_right.move_voltage(12000);
-                    pros::delay(100);
-                    acorn_grab_right.move_voltage(3000);
-                    pros::delay(1000);
+                    pros::delay(2*1000);
+                    std::cout << "launch" << std::endl;
+                    acorn_grab_right.move_voltage(-12000);
+                    pros::delay(1*1000);
                     acorn_grab_right.move_voltage(0);
                     reloaded = true;
                 }};
             }
+            */
             break;
         //B Team
         case 2: 
