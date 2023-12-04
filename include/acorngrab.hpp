@@ -35,12 +35,12 @@ void acorngrab(int * c, int team) {
                 acorn_grab_left.move_voltage(0);
             }
             
-            //endgame
+            /*endgame
             if (right_bumper && right_trigger) {
                 acorn_grab_right.move_voltage(-12000);
             }
             
-            /* shooter switched for endgame save this for later
+             shooter switched for endgame save this for later
             if (right_bumper && reloaded) {
                 pros::Task {[=] {
                     reloaded = false;

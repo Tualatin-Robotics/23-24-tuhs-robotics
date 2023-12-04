@@ -4,6 +4,7 @@
 #include "drivetrain.hpp"
 #include "replay.hpp"
 #include "acorngrab.hpp"
+#include "endgame.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -61,6 +62,7 @@ void autonomous() {
     std::cout << "Auton passed file check" << std::endl;
     init_drivetrain();
     init_acorngrab();
+    init_endgame();
     VirtualController vc(&drive_con, true);
     std::chrono::high_resolution_clock clock;
 
@@ -96,6 +98,7 @@ void opcontrol() {
         drive_op(drive_con, team);
 
         acorngrab_op(drive_con, team);
+        endgame(drive_con, team);
 
         // Replay code
 		vc.record_frame();
