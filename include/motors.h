@@ -11,6 +11,13 @@ float const MOVE_VOLT = MOVE_TOTAL / 128;
 #define BACK_LEFT_MOTOR 13
 #define BACK_RIGHT_MOTOR 14
 
+/* C Team Motors
+11 Back Left
+12 Back Right
+13 Front Right
+14 Front Left
+*/
+
 #define MIDDLE_RIGHT_MOTOR 15
 #define MIDDLE_LEFT_MOTOR 16
 

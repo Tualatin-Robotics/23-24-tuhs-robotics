@@ -1,17 +1,21 @@
 #include "main.h"
 #include <fstream>
 #include "motors.h"
-#include "drivetrain.hpp"
 #include "replay.hpp"
-#include "acorngrab.hpp"
-#include "endgame.hpp"
+#include "A_Team.hpp"
+#include "B_Team.hpp"
+#include "C_Team.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
-std::ifstream A_Team("/usd/A_Team.txt");
-std::ifstream B_Team("/usd/B_Team.txt");
-std::ifstream C_Team("/usd/C_Team.txt");
+std::ifstream A_Team_File("/usd/A_Team.txt");
+std::ifstream B_Team_File("/usd/B_Team.txt");
+std::ifstream C_Team_File("/usd/C_Team.txt");
+
+A_Team A_team;
+B_Team B_team;
+C_Team C_team;
 
 using namespace std::chrono_literals;
 
@@ -19,19 +23,19 @@ int team = 0;
 
 void initialize() {
     if (team == 0) {
-        if (A_Team) {
+        if (A_Team_File) {
             team = 1;
             std::cout << "A team" << std::endl;
         }
-        if (B_Team) {
+        if (B_Team_File) {
             team = 2;
             std::cout << "B team" << std::endl;
         }
-        if (C_Team) {
+        if (C_Team_File) {
             team = 3;
             std::cout << "C team" << std::endl;
         }
-        if (!A_Team && !B_Team && !C_Team) {
+        if (!A_Team_File && !B_Team_File && !C_Team_File) {
             std::cout << "No SD card insterted on init" << std::endl;
             team = 4;
         }
@@ -74,9 +78,14 @@ void autonomous() {
 
         vc.read_from_file();
 
-        drive_auton(&vc, team);
-
-        acorngrab_auton(&vc, team);
+        switch (team) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
 
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
@@ -86,8 +95,6 @@ void autonomous() {
 }
 
 void opcontrol() {
-    init_drivetrain();
-    init_acorngrab();
 
     VirtualController vc(&drive_con, false);
     std::chrono::high_resolution_clock clock;
@@ -95,10 +102,19 @@ void opcontrol() {
     while (true) {
         auto t1 = clock.now();
 
-        drive_op(drive_con, team);
-
-        acorngrab_op(drive_con, team);
-        endgame(drive_con, team);
+        switch (team) {
+            case 1:
+                A_team.drivetrain(drive_con);
+                break;
+            case 2:
+                B_team.drivetrain(drive_con);
+                
+                break;
+            case 3:
+                C_team.drivetrain(drive_con);
+                C_team.acorn_grab(drive_con);
+                break;
+        }
 
         // Replay code
 		vc.record_frame();
