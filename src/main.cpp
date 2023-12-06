@@ -134,6 +134,7 @@ void autonomous() {
 
         switch (team) {
             case 1:
+                A_team.drivetrain(vc, inputs);
                 break;
             case 2:
                 break;
