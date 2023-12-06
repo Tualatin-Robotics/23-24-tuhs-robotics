@@ -7,7 +7,7 @@
 class A_Team {
 
     public: 
-        void drivetrain(pros::Controller drive_con) {
+        void drivetrain(pros::Controller drive_con, int * inputs) {
 
             int left_stick_y = inputs[0];
             int right_stick_y = inputs[2];
@@ -20,7 +20,17 @@ class A_Team {
             middle_left.move_voltage(MOVE_VOLT * left_stick_y);
         }
 
-        void acorn_grab(pros::Controller drive_con) {
+        void acorn_grab(pros::Controller drive_con, int * inputs) {
+            bool acorngrabbing = false; // true means it is closed, false means it is open
+            bool reloaded = true;
+            float acorngrabvolts = 1; // percentage
+            float idlegrabvolts = 1; // percentage
+
+            bool pressed = false;
+            
+            int left_bumper = inputs[4];
+            int left_trigger = inputs[7];
+
             if (left_trigger) {
                 acorn_grab_left.move_voltage(12000 * acorngrabvolts);
             } else if (left_bumper) {
@@ -28,10 +38,23 @@ class A_Team {
             } else {
                 acorn_grab_left.move_voltage(0);
             }
+
+            if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) && !pressed) {
+                    acorn_grab_right.move_voltage(-12000);
+                    pressed = true;
+            }
+            else if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) && pressed){
+                acorn_grab_right.move_voltage(0);
+                pressed = false;
+            }
         }
 
-        void endgame(pros::Controller drive_con) {
-            
+        void endgame(pros::Controller drive_con, int * inputs) {
+            int right_bumper = inputs[5];
+            int right_trigger = inputs[6];
+            if (right_bumper && right_trigger) {
+                acorn_grab_right.move_voltage(-12000);
+            }
         }
 };
 #endif
