@@ -6,6 +6,11 @@
 
 class A_Team {
 
+    bool acorngrabbing = false; // true means it is closed, false means it is open
+    bool reloaded = true;
+    float acorngrabvolts = 1; // percentage
+    float idlegrabvolts = 1; // percentage
+
     public: 
         void drivetrain(pros::Controller drive_con, int * inputs) {
 
@@ -21,16 +26,12 @@ class A_Team {
         }
 
         void acorn_grab(pros::Controller drive_con, int * inputs) {
-            bool acorngrabbing = false; // true means it is closed, false means it is open
-            bool reloaded = true;
-            float acorngrabvolts = 1; // percentage
-            float idlegrabvolts = 1; // percentage
-
             bool pressed = false;
             
             int left_bumper = inputs[4];
             int left_trigger = inputs[7];
 
+            // Grabber
             if (left_trigger) {
                 acorn_grab_left.move_voltage(12000 * acorngrabvolts);
             } else if (left_bumper) {
@@ -39,6 +40,7 @@ class A_Team {
                 acorn_grab_left.move_voltage(0);
             }
 
+            // Launcher
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) && !pressed) {
                     acorn_grab_right.move_voltage(-12000);
                     pressed = true;
