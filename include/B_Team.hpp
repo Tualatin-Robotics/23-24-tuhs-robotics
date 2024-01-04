@@ -13,7 +13,7 @@ class B_Team {
     float idlegrabvolts = 1; // percentage
 
     public:
-        void drivetrain(pros::Controller drive_con, int * inputs) {
+        void drivetrain(int inputs[]) {
             int left_stick_x = inputs[3];
             int left_stick_y = inputs[0];
             int right_stick_x = inputs[1];
@@ -26,7 +26,7 @@ class B_Team {
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
         }
 
-        void acorn_grab(pros::Controller drive_con, int * inputs) {
+        void acorn_grab(int inputs[]) {
             int right_bumper = inputs[5];
             int right_trigger = inputs[6];
             
@@ -52,7 +52,7 @@ class B_Team {
             }
         }
 
-        void endgame(pros::Controller drive_con, int * inputs) {
+        void endgame(int inputs[]) {
             
         }
 };

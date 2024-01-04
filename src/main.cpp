@@ -134,7 +134,7 @@ void autonomous() {
 
         switch (team) {
             case 1:
-                A_team.drivetrain(vc, inputs);
+                A_team.drivetrain(inputs);
                 break;
             case 2:
                 break;
@@ -161,17 +161,17 @@ void opcontrol() {
 
         switch (team) {
             case 1:
-                A_team.drivetrain(drive_con, inputs);
-                A_team.acorn_grab(drive_con, inputs);
-                A_team.endgame(drive_con, inputs);
+                A_team.drivetrain(inputs);
+                A_team.acorn_grab(inputs);
+                A_team.endgame(inputs);
                 break;
             case 2:
-                B_team.drivetrain(drive_con, inputs);
-                B_team.acorn_grab(drive_con, inputs);
+                B_team.drivetrain(inputs);
+                B_team.acorn_grab(inputs);
                 break;
             case 3:
-                C_team.drivetrain(drive_con, inputs);
-                C_team.acorn_grab(drive_con, inputs);
+                C_team.drivetrain(inputs);
+                C_team.acorn_grab(inputs);
                 break;
         }
 
