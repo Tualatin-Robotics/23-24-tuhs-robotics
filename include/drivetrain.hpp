@@ -40,10 +40,10 @@ void drive(int * c, int team) {
             break;
         //C Team
         case 3:
-            front_right.move_voltage(MOVE_VOLT * (-right_motors + right_stick_x));
-            front_left.move_voltage(MOVE_VOLT * (-left_motors + right_stick_x));
-            back_right.move_voltage(MOVE_VOLT * (left_motors + right_stick_x));
-            back_left.move_voltage(MOVE_VOLT * (right_motors + right_stick_x));
+            front_left.move_voltage(MOVE_VOLT * left_stick_y);
+            back_left.move_voltage(MOVE_VOLT * left_stick_y);
+            front_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
         default:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);

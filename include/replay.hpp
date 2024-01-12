@@ -47,7 +47,11 @@ class VirtualController {
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen(read_file_name, "r");
+            /*
+                switch between most recent file and specific file
+            */
+            usd_file = fopen(find_next_file().c_str(), "r");
+            //usd_file = fopen(read_file_name, "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
