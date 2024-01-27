@@ -59,6 +59,7 @@ void autonomous() {
         }
     }
 
+    /*
     std::cout << "Auton passed file check" << std::endl;
     init_drivetrain();
     init_acorngrab();
@@ -82,6 +83,13 @@ void autonomous() {
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
 		pros::delay(11); //number should be tweeked for different autons
+    }*/
+
+    while (true) {
+        front_left.move_voltage(-12000);
+        front_right.move_voltage(12000);
+        back_right.move_voltage(-12000);
+        back_left.move_voltage(12000);
     }
 }
 
