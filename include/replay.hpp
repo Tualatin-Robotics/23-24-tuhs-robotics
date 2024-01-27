@@ -42,6 +42,28 @@ class VirtualController {
             }
         }
     }
+
+    std::string find_recent_file() {
+        int i = 1;
+        
+        while (true) {
+            std::string temp("/usd/rec_0");
+            std::string file_extent(".vrx");
+            std::string index = std::to_string(i);
+            temp += index;
+            temp += file_extent;
+            
+            std::ifstream temp_file(temp);
+
+            if (!temp_file) {
+                temp += i - 1;
+                temp += file_extent;
+                return temp;
+            } else {
+                i++;
+            }
+        }
+    }
         
 
     VirtualController(pros::Controller* _cont, bool isReading) {
@@ -50,8 +72,9 @@ class VirtualController {
             /*
                 switch between most recent file and specific file
             */
-            usd_file = fopen(find_next_file().c_str(), "r");
-            //usd_file = fopen(read_file_name, "r");
+
+            //usd_file = fopen(find_recent_file().c_str(), "r");
+            usd_file = fopen(read_file_name, "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
