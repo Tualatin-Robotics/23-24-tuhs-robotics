@@ -17,6 +17,8 @@ float const MOVE_VOLT = MOVE_TOTAL / 128;
 #define ACORN_GRAB_LEFT_MOTOR 17
 #define ACORN_GRAB_RIGHT_MOTOR 18
 
+#define CATAPULT_MOTOR 10
+
 #define ENDGAME_MOTOR 19
 
 pros::Motor front_right(FRONT_RIGHT_MOTOR);
@@ -28,6 +30,8 @@ pros::Motor middle_right(MIDDLE_RIGHT_MOTOR);
 
 pros::Motor acorn_grab_left(ACORN_GRAB_LEFT_MOTOR);
 pros::Motor acorn_grab_right(ACORN_GRAB_RIGHT_MOTOR);
+
+pros::Motor catapult(CATAPULT_MOTOR);
 
 pros::Motor endgame_motor(ENDGAME_MOTOR);
 

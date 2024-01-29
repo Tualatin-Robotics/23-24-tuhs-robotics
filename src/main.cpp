@@ -5,6 +5,7 @@
 #include "replay.hpp"
 #include "acorngrab.hpp"
 #include "endgame.hpp"
+#include "catapult.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -85,11 +86,28 @@ void autonomous() {
 		pros::delay(11); //number should be tweeked for different autons
     }*/
 
-    while (true) {
-        front_left.move_voltage(-12000);
-        front_right.move_voltage(12000);
-        back_right.move_voltage(-12000);
-        back_left.move_voltage(12000);
+    switch (team) {
+        case 1:
+            acorn_grab_left.move_voltage(12000);
+            pros::delay(1000);
+            acorn_grab_left.move_voltage(0);
+            break;
+        case 2:
+            front_left.move_voltage(12000);
+            front_right.move_voltage(-12000);
+            pros::delay(3000);
+            front_left.move_voltage(-12000);
+            front_right.move_voltage(12000);
+            pros::delay(2000);
+            front_left.move_voltage(0);
+            front_right.move_voltage(0);
+            break;
+        case 3:
+            front_left.move_voltage(-12000);
+            front_right.move_voltage(12000);
+            back_right.move_voltage(-12000);
+            back_left.move_voltage(12000);
+            break;
     }
 }
 
@@ -107,6 +125,7 @@ void opcontrol() {
 
         acorngrab_op(drive_con, team);
         endgame(drive_con, team);
+        catapult_run(drive_con, team);
 
         // Replay code
 		vc.record_frame();
