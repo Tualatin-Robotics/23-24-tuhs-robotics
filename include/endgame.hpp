@@ -14,19 +14,6 @@ void endgame(pros::Controller drive_con, int team) {
     switch (team) 
     {
     case 1:
-        if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && !pressed) {
-            pros::Task endgame {[=] {
-                pressed = true;
-                endgame_motor.move_voltage(12000);
-                pros::delay(40);
-                endgame_motor.move_voltage(0);
-            }};
-        }  
-
-        if (pressed) {
-            endgame_motor.move_voltage(12000);
-            endgame_motor.move_voltage(-12000);
-        } 
         break;
     case 2:
         break;

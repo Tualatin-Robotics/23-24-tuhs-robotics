@@ -5,7 +5,8 @@
 #include "replay.hpp"
 #include "acorngrab.hpp"
 #include "endgame.hpp"
-#include "catapult.hpp"
+#include "wings.hpp"
+#include "launcher.hpp"
 #include <chrono>
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -17,6 +18,7 @@ std::ifstream C_Team("/usd/C_Team.txt");
 using namespace std::chrono_literals;
 
 int team = 0;
+bool endgame_ready = false;
 
 void initialize() {
     if (team == 0) {
@@ -115,6 +117,11 @@ void opcontrol() {
     init_drivetrain();
     init_acorngrab();
 
+    pros::Task endgame_init {[=] {
+        pros::delay(70*1000);
+        endgame_ready = true;
+    }};
+
     VirtualController vc(&drive_con, false);
     std::chrono::high_resolution_clock clock;
 
@@ -124,9 +131,14 @@ void opcontrol() {
         drive_op(drive_con, team);
 
         acorngrab_op(drive_con, team);
-        endgame(drive_con, team);
-        catapult_run(drive_con, team);
+        
+        launcher_run(drive_con, team);
 
+        wings(drive_con, team);
+
+        if (endgame_ready) {
+            endgame(drive_con, team);
+        }
         // Replay code
 		vc.record_frame();
 		vc.write_to_file();

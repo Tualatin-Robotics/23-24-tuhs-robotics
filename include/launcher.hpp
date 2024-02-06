@@ -1,16 +1,16 @@
-#ifndef __CATAPULT__
-#define __CATAPULT__
+#ifndef __LAUNCHER__
+#define __LAUNCHER__
 #include "motors.h"
 
 bool running;
 bool up = true;
 bool down;
 
-void init_catapult() {
+void init_launcher() {
     catapult.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
-void catapult_run(pros::Controller drive_con, int team) {
+void launcher_run(pros::Controller drive_con, int team) {
     switch (team)
     {
         case 1:
