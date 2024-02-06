@@ -20,6 +20,8 @@ float const MOVE_VOLT = MOVE_TOTAL / 128;
 #define WING_LEFT 'A'
 #define WING_RIGHT 'B'
 
+#define SWITCH_PORT 'C'
+
 #define CATAPULT_MOTOR 10
 
 #define ENDGAME_MOTOR 19

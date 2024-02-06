@@ -1,10 +1,13 @@
 #ifndef __LAUNCHER__
 #define __LAUNCHER__
 #include "motors.h"
+#include "main.h"
 
 bool running;
 bool up = true;
 bool down;
+
+pros::ADIDigitalIn launcher_switch(SWITCH_PORT);
 
 void init_launcher() {
     catapult.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -14,33 +17,16 @@ void launcher_run(pros::Controller drive_con, int team) {
     switch (team)
     {
         case 1:
-            if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-                if (!running) {
-                    catapult.move_voltage(12000);
-                    running = true;
-                }
-                else {
-                    catapult.move_voltage(0);
-                    running = false;
-                }
+            bool switch_state = launcher_switch.get_value();
+            if (!switch_state) {
+                catapult.move_voltage(12000);
+            }
+            else if (switch_state && !drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+                catapult.move_voltage(0);
             }
 
-            if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-                if (!running) {
-                    if (up) {
-                        catapult.move_voltage(12000);
-                        pros::delay(1500);
-                        catapult.move_voltage(0);
-                        up = false;
-                        down = true;
-                    }
-                    else if (down) {
-                        catapult.move_voltage(12000);
-                        pros::delay(100);
-                        down = false;
-                        up = true;
-                    }
-                }
+            if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) && switch_state) {
+                catapult.move_voltage(12000);
             }
         break;
     }
