@@ -22,10 +22,12 @@ void launcher_run(pros::Controller drive_con, int team) {
                 catapult.move_voltage(12000);
             }
             else if (switch_state && !drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+                down = true;
                 catapult.move_voltage(0);
             }
 
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) && switch_state) {
+                down = false;
                 catapult.move_voltage(12000);
             }
         break;

@@ -37,6 +37,8 @@ void drive(int * c, int team) {
         case 2:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
+            back_left.move_voltage(MOVE_VOLT * left_stick_y);
+            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
             break;
         //C Team
         case 3:
