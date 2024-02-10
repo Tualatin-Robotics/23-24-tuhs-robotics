@@ -105,10 +105,15 @@ void autonomous() {
             front_right.move_voltage(0);
             break;
         case 3:
-            front_left.move_voltage(-12000);
-            front_right.move_voltage(12000);
+            front_left.move_voltage(12000);
+            front_right.move_voltage(-12000);
             back_right.move_voltage(-12000);
             back_left.move_voltage(12000);
+            pros::delay(3000);
+            front_left.move_voltage(0);
+            front_right.move_voltage(0);
+            back_right.move_voltage(0);
+            back_left.move_voltage(0);
             break;
     }
 }

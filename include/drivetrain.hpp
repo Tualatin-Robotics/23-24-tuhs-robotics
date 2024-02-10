@@ -20,9 +20,6 @@ void drive(int * c, int team) {
     int right_stick_x = c[2];
     int right_stick_y = c[3];
 
-    int right_motors = left_stick_y + left_stick_x;
-    int left_motors = left_stick_y - left_stick_x;
-
     switch (team) {
         //A Team
         case 1:
@@ -42,12 +39,6 @@ void drive(int * c, int team) {
             break;
         //C Team
         case 3:
-            front_left.move_voltage(MOVE_VOLT * -right_stick_y);
-            back_left.move_voltage(MOVE_VOLT * left_stick_y);
-            front_right.move_voltage(MOVE_VOLT * left_stick_y);
-            back_right.move_voltage(MOVE_VOLT * -right_stick_y);
-            break;
-        default:
             front_left.move_voltage(MOVE_VOLT * left_stick_y);
             back_left.move_voltage(MOVE_VOLT * left_stick_y);
             front_right.move_voltage(MOVE_VOLT * -right_stick_y);
