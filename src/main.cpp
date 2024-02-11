@@ -8,6 +8,8 @@
 #include "wings.hpp"
 #include "launcher.hpp"
 #include <chrono>
+#include "logo.c"
+#include "pros/screen.h"
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
@@ -20,7 +22,11 @@ using namespace std::chrono_literals;
 int team = 0;
 bool endgame_ready = false;
 
+lv_obj_t * img;
+
 void initialize() {
+    img = lv_img_create(lv_scr_act(), NULL);
+    lv_img_set_src(img, &logo);
     if (team == 0) {
         if (A_Team) {
             team = 1;
@@ -109,7 +115,12 @@ void autonomous() {
             front_right.move_voltage(-12000);
             back_right.move_voltage(-12000);
             back_left.move_voltage(12000);
-            pros::delay(3000);
+            pros::delay(1000);
+            front_left.move_voltage(-12000);
+            front_right.move_voltage(12000);
+            back_right.move_voltage(12000);
+            back_left.move_voltage(-12000);
+            pros::delay(1000);
             front_left.move_voltage(0);
             front_right.move_voltage(0);
             back_right.move_voltage(0);
