@@ -23,6 +23,9 @@ using namespace std::chrono_literals;
 int team = 0;
 bool endgame_ready = false;
 
+int64_t time_op;
+int64_t time_auton;
+
 lv_obj_t * img;
 
 void initialize() {
@@ -91,7 +94,8 @@ void autonomous() {
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(50-ms_adjust.count()); //number should be tweeked for different autons
+        time_auton = ms_adjust.count();
+		pros::delay(50-time_auton); //number should be tweeked for different autons
     }
 }
 
@@ -129,6 +133,7 @@ void opcontrol() {
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(50-ms_adjust.count());
+        time_op = ms_adjust.count();
+		pros::delay(50-time_op);
     }
 }
