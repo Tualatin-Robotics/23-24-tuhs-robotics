@@ -18,7 +18,6 @@ void launcher_run(pros::Controller drive_con, int team) {
     {
         case 1: {
             switch_state = launcher_switch.get_value();
-            pros::screen::print(pros::E_TEXT_MEDIUM, 3, "Switch State: %3d", switch_state);
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
                 if (!switch_state) {
                     pros::Task launcher_down {[=] {

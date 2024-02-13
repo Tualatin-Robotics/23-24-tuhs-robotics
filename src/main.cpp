@@ -9,6 +9,7 @@
 #include "launcher.hpp"
 #include <chrono>
 #include "logo.c"
+#include "lvgl.h"
 #include "pros/screen.h"
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
