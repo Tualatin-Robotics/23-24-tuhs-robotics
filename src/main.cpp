@@ -69,7 +69,6 @@ void autonomous() {
         }
     }
 
-    /*
     std::cout << "Auton passed file check" << std::endl;
     init_drivetrain();
     init_acorngrab();
@@ -92,41 +91,7 @@ void autonomous() {
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(11); //number should be tweeked for different autons
-    }*/
-
-    switch (team) {
-        case 1:
-            acorn_grab_left.move_voltage(12000);
-            pros::delay(1000);
-            acorn_grab_left.move_voltage(0);
-            break;
-        case 2:
-            front_left.move_voltage(12000);
-            front_right.move_voltage(-12000);
-            pros::delay(3000);
-            front_left.move_voltage(-12000);
-            front_right.move_voltage(12000);
-            pros::delay(2000);
-            front_left.move_voltage(0);
-            front_right.move_voltage(0);
-            break;
-        case 3:
-            front_left.move_voltage(12000);
-            front_right.move_voltage(-12000);
-            back_right.move_voltage(-12000);
-            back_left.move_voltage(12000);
-            pros::delay(1000);
-            front_left.move_voltage(-12000);
-            front_right.move_voltage(12000);
-            back_right.move_voltage(12000);
-            back_left.move_voltage(-12000);
-            pros::delay(1000);
-            front_left.move_voltage(0);
-            front_right.move_voltage(0);
-            back_right.move_voltage(0);
-            back_left.move_voltage(0);
-            break;
+		pros::delay(50-ms_adjust.count()); //number should be tweeked for different autons
     }
 }
 
@@ -164,6 +129,6 @@ void opcontrol() {
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(10);
+		pros::delay(50-ms_adjust.count());
     }
 }
