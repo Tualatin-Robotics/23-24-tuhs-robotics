@@ -17,26 +17,9 @@ void launcher_run(pros::Controller drive_con, int team) {
     switch (team)
     {
         case 1: {
-            switch_state = launcher_switch.get_value();
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
-                if (!switch_state) {
-                    pros::Task launcher_down {[=] {
-                        while (!switch_state) {
-                            catapult.move_voltage(12000);
-                            switch_state = launcher_switch.get_value();
-                        }
-                        catapult.move_voltage(0);
-                        down = true;
-                    }};
-                }
-                else if (switch_state && down) {
-                    pros::Task launcher_up {[=] {
-                        catapult.move_voltage(12000);
-                        pros::delay(500); // needs tweaking
-                        catapult.move_voltage(0);
-                        down = false;
-                    }};
-                }
+                running = !running;
+                catapult.move_voltage(12000*running);
             }
             break;
         }
