@@ -95,7 +95,10 @@ void autonomous() {
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
         time_auton = ms_adjust.count();
-		pros::delay(50-time_auton); //number should be tweeked for different autons
+		int delaytime = 50-time_op;
+        if (delaytime > 0) {
+		    pros::delay(50-time_op);
+        }
     }
 }
 
@@ -134,6 +137,9 @@ void opcontrol() {
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
         time_op = ms_adjust.count();
-		pros::delay(50-time_op);
+        int delaytime = 50-time_op;
+        if (delaytime > 0) {
+		    pros::delay(50-time_op);
+        }
     }
 }
