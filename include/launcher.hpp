@@ -19,7 +19,7 @@ void launcher_run(pros::Controller drive_con, int team) {
         case 1: {
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
                 running = !running;
-                catapult.move_voltage(12000*running);
+                catapult.move_voltage(10000*running);
             }
             break;
         }
@@ -29,8 +29,8 @@ void launcher_run(pros::Controller drive_con, int team) {
         case 3: {
             if (drive_con.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
                 running = !running;
-                catapult.move_voltage(6000 * running);
-                catapult_2.move_voltage(-6000 * running);
+                catapult.move_voltage(7500 * running);
+                catapult_2.move_voltage(-7500 * running);
             }
             break;
         }

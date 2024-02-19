@@ -8,9 +8,9 @@
 #include "wings.hpp"
 #include "launcher.hpp"
 #include <chrono>
-#include "logo.c"
 #include "lvgl.h"
 #include "pros/screen.h"
+#include "logo.c"
 
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
@@ -29,8 +29,11 @@ int64_t time_auton;
 lv_obj_t * img;
 
 void initialize() {
+    FILE *file = fopen("logo.c", "r");
+    fscanf(file, )
     img = lv_img_create(lv_scr_act(), NULL);
     lv_img_set_src(img, &logo);
+    //lv_img_set_src(img, "/usd/logomap.bin");
     if (team == 0) {
         if (A_Team) {
             team = 1;
@@ -97,7 +100,7 @@ void autonomous() {
         time_auton = ms_adjust.count();
 		int delaytime = 50-time_op;
         if (delaytime > 0) {
-		    pros::delay(50-time_op);
+		    pros::delay(delaytime);
         }
     }
 }
@@ -139,7 +142,7 @@ void opcontrol() {
         time_op = ms_adjust.count();
         int delaytime = 50-time_op;
         if (delaytime > 0) {
-		    pros::delay(50-time_op);
+		    pros::delay(delaytime);
         }
     }
 }

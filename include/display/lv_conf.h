@@ -339,3 +339,5 @@
 #endif
 #include "display/lv_conf_checker.h"
 #endif /*LV_CONF_H*/
+
+#define LV_USE_FS_STDIO 'S'
