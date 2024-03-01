@@ -30,7 +30,6 @@ lv_obj_t * img;
 
 void initialize() {
     FILE *file = fopen("logo.c", "r");
-    fscanf(file, )
     img = lv_img_create(lv_scr_act(), NULL);
     lv_img_set_src(img, &logo);
     //lv_img_set_src(img, "/usd/logomap.bin");
