@@ -32,7 +32,6 @@ void initialize() {
     FILE *file = fopen("logo.c", "r");
     img = lv_img_create(lv_scr_act(), NULL);
     lv_img_set_src(img, &logo);
-    //lv_img_set_src(img, "/usd/logomap.bin");
     if (team == 0) {
         if (A_Team) {
             team = 1;
@@ -93,15 +92,20 @@ void autonomous() {
 
         acorngrab_auton(&vc, team);
 
+        wings_auton(&vc, team);
+
         auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
         time_auton = ms_adjust.count();
-		int delaytime = 50-time_op;
-        if (delaytime > 0) {
-		    pros::delay(delaytime);
-        }
+		pros::delay(11);
     }
+    /*
+    acorn_grab_left.move_voltage(12000);
+    pros::delay(4000);
+    acorn_grab_left.move_voltage(0);
+    */
+
 }
 
 void opcontrol() {
@@ -139,9 +143,6 @@ void opcontrol() {
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
         time_op = ms_adjust.count();
-        int delaytime = 50-time_op;
-        if (delaytime > 0) {
-		    pros::delay(delaytime);
-        }
+        pros::delay(10);
     }
 }
