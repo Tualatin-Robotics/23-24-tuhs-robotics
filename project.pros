@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "23-24-tuhs-robotics",
+    "project_name": "Competition Code",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -310,7 +310,8 @@
     },
     "upload_options": {
       "icon": "X",
-      "slot": 2
+      "slot": 1,
+      "after": "none"
     }
   }
 }

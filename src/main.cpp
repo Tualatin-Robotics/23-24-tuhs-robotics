@@ -4,7 +4,6 @@
 #include "drivetrain.hpp"
 #include "replay.hpp"
 #include "acorngrab.hpp"
-#include "endgame.hpp"
 #include "wings.hpp"
 #include "launcher.hpp"
 #include <chrono>
@@ -21,7 +20,6 @@ std::ifstream C_Team("/usd/C_Team.txt");
 using namespace std::chrono_literals;
 
 int team = 0;
-bool endgame_ready = false;
 
 int64_t time_op;
 int64_t time_auton;
@@ -98,24 +96,18 @@ void autonomous() {
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
         time_auton = ms_adjust.count();
-		pros::delay(11);
+		pros::delay(12);
     }
     /*
     acorn_grab_left.move_voltage(12000);
     pros::delay(4000);
     acorn_grab_left.move_voltage(0);
     */
-
 }
 
 void opcontrol() {
     init_drivetrain();
     init_acorngrab();
-
-    pros::Task endgame_init {[=] {
-        pros::delay(70*1000);
-        endgame_ready = true;
-    }};
 
     VirtualController vc(&drive_con, false);
     std::chrono::high_resolution_clock clock;
@@ -131,9 +123,6 @@ void opcontrol() {
 
         wings(drive_con, team);
 
-        if (endgame_ready) {
-            endgame(drive_con, team);
-        }
         // Replay code
 		vc.record_frame();
 		vc.write_to_file();
